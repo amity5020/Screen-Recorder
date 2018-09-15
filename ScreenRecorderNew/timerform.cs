@@ -21,7 +21,20 @@ namespace ScreenRecorderNew
         {
             this.TransparencyKey = Color.Turquoise;
             this.BackColor = Color.Turquoise;
-            timer1.Start();
+            if (Program.eRequestFor == RequestFor.ScreenRecording)
+            {
+                timer1.Start();
+            }else
+            if (RecordVideo.IsRecordLoad)
+            {
+                RecordVideo recordVideo = new RecordVideo();
+                recordVideo.Show();
+                timer2.Start();
+               
+            }else
+            {
+                timer1.Start();
+            }
         }
         int count = 3;
         private void timer1_Tick(object sender, EventArgs e)
@@ -30,7 +43,16 @@ namespace ScreenRecorderNew
             { lblTimer.Text = "Go"; }
             else if (count == 0)
             {
-                timer1.Stop(); this.Close();
+                timer1.Stop(); this.Hide();
+                if (Program.eRequestFor == RequestFor.ScreenRecording)
+                {
+                    Form1 form1 = new Form1();
+                    form1.Show();
+                }
+                else
+                {
+                    this.Hide();
+                }
             }
             else
             {
@@ -43,6 +65,13 @@ namespace ScreenRecorderNew
         {
             //var hb = new HatchBrush(HatchStyle.Percent90, this.TransparencyKey);
             //e.Graphics.FillRectangle(hb, this.DisplayRectangle);
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            timer2.Stop();
+            timer2.Dispose();
+            this.Hide();
         }
     }
 }

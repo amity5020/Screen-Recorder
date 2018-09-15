@@ -9,7 +9,7 @@ namespace ScreenRecorderNew
 {
     static class Program
     {
-        public static int eRequestFor;
+        public static RequestFor eRequestFor = RequestFor.ScreenRecording;
         public static string Localpath = "";
         public static CloudFile cloudFile;
         /// <summary>
@@ -23,8 +23,8 @@ namespace ScreenRecorderNew
             {
                 Directory.CreateDirectory(path);
             }
-          //  if (!CheckForProtocolMessage())
-             if (false)
+            if (!CheckForProtocolMessage())
+           //if (false)
             {
                 MessageBox.Show("Please launch the Screen Recorder only from the Trezle coaching application.");
                 Environment.Exit(1);
@@ -34,13 +34,14 @@ namespace ScreenRecorderNew
                 Localpath = path;
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                if (eRequestFor == (int)RequestFor.ScreenRecording)
+                if (eRequestFor == RequestFor.ScreenRecording)
                 {
-                    Application.Run(new Form1());
+                    Application.Run(new timerform());
                 }
                 else
                 {
-                    Application.Run(new Form1());
+                    RecordVideo.IsRecordLoad = true;
+                    Application.Run(new timerform());
                 }
             }
         }
@@ -64,11 +65,11 @@ namespace ScreenRecorderNew
                                 {
                                     if (details[0] == "IdRecord")
                                     {
-                                        eRequestFor = (int)RequestFor.VideoRecording;
+                                        eRequestFor = RequestFor.VideoRecording;
                                     }
                                     else
                                     {
-                                        eRequestFor = (int)RequestFor.ScreenRecording;
+                                        eRequestFor = RequestFor.ScreenRecording;
                                     }
                                     string id = details[1].Trim();
                                     ClsCommon.UserId = id;
@@ -81,10 +82,12 @@ namespace ScreenRecorderNew
             }
             return false;
         }
-        public enum RequestFor
-        {
-            ScreenRecording = 1,
-            VideoRecording = 2
-        }
+      
+    }
+    public enum RequestFor
+    {
+        none=0,
+        ScreenRecording = 1,
+        VideoRecording = 2
     }
 }

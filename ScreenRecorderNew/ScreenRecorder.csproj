@@ -129,6 +129,12 @@
     <Compile Include="timerform.Designer.cs">
       <DependentUpon>timerform.cs</DependentUpon>
     </Compile>
+    <Compile Include="VideoPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VideoPreview.Designer.cs">
+      <DependentUpon>VideoPreview.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -150,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="timerform.resx">
       <DependentUpon>timerform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VideoPreview.resx">
+      <DependentUpon>VideoPreview.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -205,6 +214,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\upload-9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

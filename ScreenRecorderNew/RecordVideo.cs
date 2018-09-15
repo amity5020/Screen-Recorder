@@ -65,7 +65,8 @@ namespace ScreenRecorderNew
             }
             cmbMicrophone.SelectedIndex = 0;
         }
-     //   string CameraUrl;
+        //   string CameraUrl;
+        bool ClosedByCode = false;
         private void RecordVideo_Load(object sender, EventArgs e)
         {
             GetDevices();
@@ -103,8 +104,12 @@ namespace ScreenRecorderNew
                 }
 
             }
-            Environment.Exit(1);
+            if (!ClosedByCode)
+            {
+                Environment.Exit(1);
+            }
         }
+        public static bool IsRecordLoad = false;
         private void button1_Click(object sender, EventArgs e)
         {   if(_recorder)
             {
@@ -114,9 +119,12 @@ namespace ScreenRecorderNew
                 this.Text = "Recording Stopped.";
                 MainWindowView.StopRecording();
                 MainWindowView.StopCamera();
-                Thread thread = new Thread(showplay);
-                thread.Start();
-                this.Hide();
+                // Thread thread = new Thread(showplay);
+                //thread.Start();
+                VideoPreview videoPreview = new VideoPreview();
+                videoPreview.Show();
+                ClosedByCode = true;
+                this.Close();
             }
             else
             {
@@ -124,6 +132,7 @@ namespace ScreenRecorderNew
                 _recorder = true;
                 //Thread tr= new Thread(startCamera);
                 //tr.Start();
+                IsRecordLoad = false;
                 timerform timerform = new timerform();
                 timerform.ShowDialog();
                 button1.BackgroundImage = Resources.StopRecording2;

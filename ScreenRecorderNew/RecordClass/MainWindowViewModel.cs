@@ -23,7 +23,7 @@ using NAudio.Wave;
 
 namespace ScreenRecorderNew
 {
-    internal class MainWindowViewModel 
+    internal class MainWindowViewModel :IDisposable
     {
         #region Private fields
         private IVideoSource _videoSource;
@@ -281,6 +281,8 @@ namespace ScreenRecorderNew
             if (_isAudio)
             {
                 waveSource.StopRecording();
+                waveSource.DataAvailable -= waveSource_DataAvailable;
+                waveSource.RecordingStopped -= waveSource_RecordingStopped;
                 _audioPipe.Flush();
                 _audioPipe.Dispose();
             }
@@ -348,7 +350,7 @@ namespace ScreenRecorderNew
 
             var videoInArgs = $@" -thread_queue_size 512 -use_wallclock_as_timestamps 1 -f rawvideo -pix_fmt rgb32 -video_size {widht}x{heigth} -i \\.\pipe\{videoPipeName}";
             // var videoOutArgs = $"-vcodec libx264 -crf 15 -pix_fmt yuv420p -preset ultrafast -r 10";
-            var videoOutArgs = "-vcodec libx264 -crf 25 -pix_fmt yuv420p -preset ultrafast -r 10";
+           var videoOutArgs = "-vcodec libx264 -crf 25 -pix_fmt yuv420p -preset ultrafast -r 10";
             if (_isAudio)
             {
                 audioInArgs = $" -thread_queue_size 512 -f s16le -acodec pcm_s16le -ar 44100 -ac 2 -i {PipePrefix}{audioPipeName}";
@@ -436,6 +438,16 @@ namespace ScreenRecorderNew
 
                 _lastAudio = _audioPipe.WriteAsync(e.Buffer, 0, e.Buffer.Length);
            // }
+        }
+
+        public void Dispose()
+        {
+            //waveFile.Dispose();
+            
+            Process.Dispose();
+            _lastAudio.Dispose();
+            _lastFrameTask.Dispose();
+            VideoDevices = null;
         }
         #endregion
     }

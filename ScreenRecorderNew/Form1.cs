@@ -40,7 +40,13 @@ namespace ScreenRecorderNew
             string str = times.ToString(@"hh\:mm\:ss");
             lblTime.Text = str;
         }
+        void ShowPreview()
+        {
+            VideoPreview videoPreview = new VideoPreview();
+            videoPreview.ShowDialog();
+        }
         int DeviceCount = 0;
+        bool closedByCode = false;
         private void btnStartStop_Click(object sender, EventArgs e)
         {
             if (isrecording)
@@ -50,8 +56,17 @@ namespace ScreenRecorderNew
                 this.Text = "Recording Stopped.";
                 timer1.Stop();
                 time = 0;
+                timer1.Dispose();
                 MainWindowViewModel.StopRecording();
-                Process.Start(Program.Localpath+"//index.html");
+                MainWindowViewModel.Dispose();
+                MainWindowViewModel = null;
+                // this.Dispose();
+                VideoPreview videoPreview = new VideoPreview();
+                videoPreview.Show();
+                closedByCode = true;
+                this.Close();
+               
+                //Process.Start(Program.Localpath+"//index.html");
                 //Thread thread = new Thread(showplay);
                 //thread.Start();
                 //this.Hide();
@@ -59,8 +74,8 @@ namespace ScreenRecorderNew
             else
             {
                 isrecording = true;
-                timerform timerform = new timerform();
-                timerform.ShowDialog();
+               // timerform timerform = new timerform();
+               // timerform.ShowDialog();
                 btnStartStop.BackgroundImage = Resources.StopRecording1;
                 this.Text = "Recording...";
                 DeviceCount = WaveIn.DeviceCount;
@@ -97,7 +112,10 @@ namespace ScreenRecorderNew
                     return;
                 }
             }
-            Environment.Exit(1);
+            if (!closedByCode)
+            {
+                Environment.Exit(1);
+            }
         }
 
         void showplay()
