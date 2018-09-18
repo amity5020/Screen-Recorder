@@ -34,13 +34,14 @@ namespace ScreenRecorderNew
             }else
             {
                 timer1.Start();
+                lblTimer.Text = "3";
             }
         }
         int count = 3;
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (count == 1)
-            { lblTimer.Text = "Go"; }
+            { lblTimer.Text = "Start"; }
             else if (count == 0)
             {
                 timer1.Stop(); this.Hide();

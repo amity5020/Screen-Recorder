@@ -41,10 +41,11 @@
             this.lblTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 150F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTimer.ForeColor = System.Drawing.Color.Black;
             this.lblTimer.Location = new System.Drawing.Point(-1, -2);
+            this.lblTimer.MinimumSize = new System.Drawing.Size(500, 0);
             this.lblTimer.Name = "lblTimer";
-            this.lblTimer.Size = new System.Drawing.Size(206, 226);
+            this.lblTimer.Size = new System.Drawing.Size(500, 226);
             this.lblTimer.TabIndex = 0;
-            this.lblTimer.Text = "3";
+            this.lblTimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // timer1
             // 
@@ -59,7 +60,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(349, 288);
+            this.ClientSize = new System.Drawing.Size(504, 229);
             this.Controls.Add(this.lblTimer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "timerform";

@@ -89,7 +89,7 @@ namespace ScreenRecorderNew
                         _recorder = false;
                         this.Text = "Recording Stopped.";
                         MainWindowView.StopRecording();
-                        MainWindowView.StopCamera();
+                      //  MainWindowView.StopCamera();
 
                     }
                     catch (Exception ex)
@@ -106,6 +106,7 @@ namespace ScreenRecorderNew
             }
             if (!ClosedByCode)
             {
+                MainWindowView.StopCamera();
                 Environment.Exit(1);
             }
         }
@@ -185,6 +186,7 @@ namespace ScreenRecorderNew
 
         private void cmbWebCamera_SelectedIndexChanged(object sender, EventArgs e)
         {
+            MainWindowView.StopCamera();
             startCamera();
         }
     }

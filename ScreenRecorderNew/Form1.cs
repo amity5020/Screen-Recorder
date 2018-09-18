@@ -80,10 +80,12 @@ namespace ScreenRecorderNew
                 this.Text = "Recording...";
                 DeviceCount = WaveIn.DeviceCount;
                 bool isaudio = DeviceCount > 0 ? true : false;
-                MainWindowViewModel = new MainWindowViewModel();
-                MainWindowViewModel.IsDesktopSource = true;
-                MainWindowViewModel.IsIpCameraSource = false;
-                MainWindowViewModel.IsWebcamSource = false;
+                MainWindowViewModel = new MainWindowViewModel
+                {
+                    IsDesktopSource = true,
+                    IsIpCameraSource = false,
+                    IsWebcamSource = false
+                };
                 MainWindowViewModel.StartCamera();
                 MainWindowViewModel.StartRecording(isaudio,0,2);
                 timer1.Interval = 1000;

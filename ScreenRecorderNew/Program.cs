@@ -9,7 +9,7 @@ namespace ScreenRecorderNew
 {
     static class Program
     {
-        public static RequestFor eRequestFor = RequestFor.ScreenRecording;
+        public static RequestFor eRequestFor = RequestFor.VideoRecording;
         public static string Localpath = "";
         public static CloudFile cloudFile;
         /// <summary>
@@ -24,7 +24,7 @@ namespace ScreenRecorderNew
                 Directory.CreateDirectory(path);
             }
             if (!CheckForProtocolMessage())
-           //if (false)
+         // if (false)
             {
                 MessageBox.Show("Please launch the Screen Recorder only from the Trezle coaching application.");
                 Environment.Exit(1);

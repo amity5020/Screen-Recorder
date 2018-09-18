@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.Pipes;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
@@ -107,7 +108,6 @@ namespace ScreenRecorderNew
                 if (CurrentDevice != null)
                 {
                     _videoSource = new VideoCaptureDevice(CurrentDevice.MonikerString);
-                    
                     _videoSource.NewFrame += video_NewFrame;
                     _videoSource.Start();
                 }
@@ -214,7 +214,7 @@ namespace ScreenRecorderNew
                         {
                             bitmapnew = CaptureScreen(true,bitmap);
                         }
-                        var _videoBuffers = ImageToByte(bitmapnew);
+                       // var _videoBuffers = ImageToByte(bitmapnew);
                         var bits = bitmapnew.LockBits(new Rectangle(System.Drawing.Point.Empty, bitmapnew.Size), ImageLockMode.ReadOnly, PixelFormat.Format32bppRgb);
 
                         Parallel.For(0, heigth, Y =>
@@ -234,6 +234,7 @@ namespace ScreenRecorderNew
                         {
                             if (_firstFrame)
                             {
+                                Thread.Sleep(300);
                                 if (!WaitForConnection(_ffmpegIn, 5000))
                                 {
                                     throw new Exception("Cannot connect Video pipe to FFmpeg");
@@ -426,6 +427,7 @@ namespace ScreenRecorderNew
                 //waveFile.Flush();
                 if (_firstAudio)
                 {
+               
                     if (!WaitForConnection(_audioPipe,5000))
                     {
                         throw new Exception("Cannot connect Audio pipe to FFmpeg");
@@ -445,7 +447,10 @@ namespace ScreenRecorderNew
             //waveFile.Dispose();
             
             Process.Dispose();
-            _lastAudio.Dispose();
+            if (_isAudio)
+            {
+                _lastAudio.Dispose();
+            }
             _lastFrameTask.Dispose();
             VideoDevices = null;
         }

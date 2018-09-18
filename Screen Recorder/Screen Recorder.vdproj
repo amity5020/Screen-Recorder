@@ -255,6 +255,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_5B6C801BAEA31C83534C37367108A728"
+        "OwnerKey" = "8:_6C4969215FC449D182DE2C78755D5F38"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5B6C801BAEA31C83534C37367108A728"
+        "OwnerKey" = "8:_B8EA043E2E96498E9DBBA427B5C3BD64"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_67E785A33B3E449498201546EE6F96C0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -483,6 +495,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BBB63060AE1652AA3DE9513A7783870C"
+        "OwnerKey" = "8:_DE5144D604F16C0EF44B89EC6C83BCC6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_BD6DE63CBB05A97EF1FC1EEBFA516A6C"
         "OwnerKey" = "8:_6C4969215FC449D182DE2C78755D5F38"
         "MsmSig" = "8:_UNDEFINED"
@@ -544,6 +562,24 @@
         "Entry"
         {
         "MsmKey" = "8:_DDEF02EEEFE7132FCF1756F0BC65B998"
+        "OwnerKey" = "8:_6C4969215FC449D182DE2C78755D5F38"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DE5144D604F16C0EF44B89EC6C83BCC6"
+        "OwnerKey" = "8:_5B6C801BAEA31C83534C37367108A728"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DE5144D604F16C0EF44B89EC6C83BCC6"
+        "OwnerKey" = "8:_B8EA043E2E96498E9DBBA427B5C3BD64"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DE5144D604F16C0EF44B89EC6C83BCC6"
         "OwnerKey" = "8:_6C4969215FC449D182DE2C78755D5F38"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -682,19 +718,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DAA217B94DD94C57F1B5F84B96EF4345"
+        "OwnerKey" = "8:_6C4969215FC449D182DE2C78755D5F38"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B8EA043E2E96498E9DBBA427B5C3BD64"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6C4969215FC449D182DE2C78755D5F38"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -713,6 +743,18 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_9AED4F54547F4C146D051B74D16181D2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5B6C801BAEA31C83534C37367108A728"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DE5144D604F16C0EF44B89EC6C83BCC6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1093,6 +1135,12 @@
         "OwnerKey" = "8:_2EAD487CAB1160114E92EA3895BE2103"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DAA217B94DD94C57F1B5F84B96EF4345"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -1111,6 +1159,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -1127,6 +1191,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -2047,6 +2119,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5B6C801BAEA31C83534C37367108A728"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AxInterop.WMPLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_5B6C801BAEA31C83534C37367108A728"
+                    {
+                    "Name" = "8:AxInterop.WMPLib.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:AxInterop.WMPLib.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_AEE083C698C54559903A3E8D2642482C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_67E785A33B3E449498201546EE6F96C0"
             {
             "SourcePath" = "8:..\\ScreenRecorderNew\\bin\\Debug\\ScreenRecorder.exe.config"
@@ -2862,6 +2965,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BBB63060AE1652AA3DE9513A7783870C"
+            {
+            "SourcePath" = "8:wmp.dll"
+            "TargetName" = "8:wmp.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_AEE083C698C54559903A3E8D2642482C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BD6DE63CBB05A97EF1FC1EEBFA516A6C"
             {
             "AssemblyRegister" = "3:1"
@@ -3082,6 +3205,37 @@
                     }
                 }
             "SourcePath" = "8:System.Reflection.Emit.Lightweight.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_AEE083C698C54559903A3E8D2642482C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DE5144D604F16C0EF44B89EC6C83BCC6"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Interop.WMPLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_DE5144D604F16C0EF44B89EC6C83BCC6"
+                    {
+                    "Name" = "8:Interop.WMPLib.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Interop.WMPLib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_AEE083C698C54559903A3E8D2642482C"
@@ -3579,7 +3733,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Screen Recorder"
         "ProductCode" = "8:{7C0C7CC7-0440-4750-90D7-51DB849031A4}"
-        "PackageCode" = "8:{54387F63-0D0D-4F58-B704-7B44F0141B01}"
+        "PackageCode" = "8:{EEEFEE72-8C31-454D-B199-D10DEF3D73B3}"
         "UpgradeCode" = "8:{12A705F9-7EE0-4A61-BE54-E4204E5D8E25}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -3587,15 +3741,15 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:Trezle"
         "ARPHELPTELEPHONE" = "8:"
-        "ARPHELPLINK" = "8:"
+        "ARPHELPLINK" = "8:https://www.sociosecuretech.com"
         "Title" = "8:Screen Recorder"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:Trezle"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:"
-        "ARPURLINFOABOUT" = "8:"
+        "ARPCOMMENTS" = "8:Trezle Recorder"
+        "ARPURLINFOABOUT" = "8:https://www.sociosecuretech.com"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
