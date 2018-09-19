@@ -46,6 +46,9 @@ namespace ScreenRecorderNew
                 DialogResult dialog = MessageBox.Show("Are you sure close application and discard recording?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialog == DialogResult.Yes)
                 {
+
+                    DLOperation dLOperations = new DLOperation();
+                    dLOperations.SaveEntry(ClsCommon.UserId, "");
                     Environment.Exit(1);
                 }else
                 {
@@ -53,6 +56,9 @@ namespace ScreenRecorderNew
                     return;
                 }
             }
+
+           // DLOperation dLOperation = new DLOperation();
+          //  dLOperation.SaveEntry(ClsCommon.UserId, "");
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -114,9 +114,12 @@ namespace ScreenRecorderNew
                     return;
                 }
             }
+           
             if (!closedByCode)
             {
-                Environment.Exit(1);
+                DLOperation dLOperation = new DLOperation();
+                dLOperation.SaveEntry(ClsCommon.UserId, "");
+                Environment.Exit(1); 
             }
         }
 

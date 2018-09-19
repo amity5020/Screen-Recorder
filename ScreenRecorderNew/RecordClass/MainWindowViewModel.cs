@@ -87,8 +87,8 @@ namespace ScreenRecorderNew
         {
             if (IsDesktopSource)
             {
-               
-                var rectangle = new Rectangle();
+                SetDpiAwareness();
+                 var rectangle = new Rectangle();
                 foreach (var screen in System.Windows.Forms.Screen.AllScreens)
                 {
                     rectangle = Rectangle.Union(rectangle, screen.Bounds);
@@ -144,6 +144,30 @@ namespace ScreenRecorderNew
 
         [DllImport("user32.dll")]
         static extern bool DrawIcon(IntPtr hDC, int X, int Y, IntPtr hIcon);
+
+        private enum ProcessDPIAwareness
+        {
+            ProcessDPIUnaware = 0,
+            ProcessSystemDPIAware = 1,
+            ProcessPerMonitorDPIAware = 2
+        }
+
+        [DllImport("shcore.dll")]
+        private static extern int SetProcessDpiAwareness(ProcessDPIAwareness value);
+
+        private static void SetDpiAwareness()
+        {
+            try
+            {
+                if (Environment.OSVersion.Version.Major >= 6)
+                {
+                    SetProcessDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
+                }
+            }
+            catch (EntryPointNotFoundException)//this exception occures if OS does not implement this API, just ignore it.
+            {
+            }
+        }
 
         const Int32 CURSOR_SHOWING = 0x00000001;
 

@@ -62,8 +62,10 @@ namespace ScreenRecorderNew
                 waveInCapabilities.Add(deviceInfo);
                 cmbMicrophone.Items.Add(deviceInfo.ProductName);
                // Console.WriteLine("Device {0}: {1}, {2} channels", waveInDevice, deviceInfo.ProductName, deviceInfo.Channels);
+            }if (waveInDevices > 0)
+            {
+                cmbMicrophone.SelectedIndex = 0;
             }
-            cmbMicrophone.SelectedIndex = 0;
         }
         //   string CameraUrl;
         bool ClosedByCode = false;
@@ -73,6 +75,12 @@ namespace ScreenRecorderNew
             GetAudioDevices();
             startCamera();
             cmbWebCamera.SelectedIndexChanged += cmbWebCamera_SelectedIndexChanged;
+            var rectangle = new Rectangle();
+            foreach (var screen in System.Windows.Forms.Screen.AllScreens)
+            {
+                rectangle = Rectangle.Union(rectangle, screen.Bounds);
+            }
+            MessageBox.Show(this,rectangle.Height.ToString() + " X " + rectangle.Width.ToString());
         }
         private void RecordVideo_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -104,10 +112,14 @@ namespace ScreenRecorderNew
                 }
 
             }
+
+            
             if (!ClosedByCode)
             {
+                DLOperation dLOperation = new DLOperation();
+                dLOperation.SaveEntry(ClsCommon.UserId, "");
                 MainWindowView.StopCamera();
-                Environment.Exit(1);
+                Application.Exit();
             }
         }
         public static bool IsRecordLoad = false;
@@ -139,7 +151,7 @@ namespace ScreenRecorderNew
                 button1.BackgroundImage = Resources.StopRecording2;
                 this.Text = "Recording...";
                 bool isaudio = waveInCapabilities.Count > 0 ? true : false;
-                MainWindowView.StartRecording(isaudio,cmbMicrophone.SelectedIndex,waveInCapabilities[cmbMicrophone.SelectedIndex].Channels);
+                MainWindowView.StartRecording(isaudio,cmbMicrophone.SelectedIndex,2);
                 timerRecordTime.Start();
                 timerRecordTime.Interval=1000;
             }

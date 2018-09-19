@@ -23,6 +23,7 @@ namespace ScreenRecorderNew
             this.BackColor = Color.Turquoise;
             if (Program.eRequestFor == RequestFor.ScreenRecording)
             {
+                lblTimer.Text = "3";
                 timer1.Start();
             }else
             if (RecordVideo.IsRecordLoad)

@@ -24,7 +24,7 @@ namespace ScreenRecorderNew
                 Directory.CreateDirectory(path);
             }
             if (!CheckForProtocolMessage())
-         // if (false)
+           //  if (false)
             {
                 MessageBox.Show("Please launch the Screen Recorder only from the Trezle coaching application.");
                 Environment.Exit(1);
