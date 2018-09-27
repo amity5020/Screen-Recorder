@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Diagnostics;
+using System.Management;
+
 namespace ScreenRecorderNew
 {
     public partial class timerform : Form
@@ -19,6 +22,7 @@ namespace ScreenRecorderNew
 
         private void timerform_Load(object sender, EventArgs e)
         {
+           // GetParent();
             this.TransparencyKey = Color.Turquoise;
             this.BackColor = Color.Turquoise;
             if (Program.eRequestFor == RequestFor.ScreenRecording)
@@ -38,6 +42,7 @@ namespace ScreenRecorderNew
                 lblTimer.Text = "3";
             }
         }
+
         int count = 3;
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -62,7 +67,7 @@ namespace ScreenRecorderNew
             }
             count--;
         }
-
+     
         private void timerform_Paint(object sender, PaintEventArgs e)
         {
             //var hb = new HatchBrush(HatchStyle.Percent90, this.TransparencyKey);

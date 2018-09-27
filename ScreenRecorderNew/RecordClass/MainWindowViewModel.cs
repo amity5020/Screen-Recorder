@@ -85,42 +85,67 @@ namespace ScreenRecorderNew
 
         public void StartCamera(FilterInfo filterInfo = null,PictureBox pictureBox=null)
         {
-            if (IsDesktopSource)
+            try
             {
-                SetDpiAwareness();
-                 var rectangle = new Rectangle();
-                foreach (var screen in System.Windows.Forms.Screen.AllScreens)
+                if (IsDesktopSource)
                 {
-                    rectangle = Rectangle.Union(rectangle, screen.Bounds);
-                }
-                heigth = rectangle.Height;
-                widht = rectangle.Width;
-                _videoSource = new ScreenCaptureStream(rectangle);
-                _videoSource.NewFrame += video_NewFrame;
-                _videoSource.Start();
-            }
-            else if (IsWebcamSource)
-            {
-                _PictureBox = pictureBox;
-                CurrentDevice = filterInfo;
-                heigth = 480;
-                widht = 640;
-                if (CurrentDevice != null)
-                {
-                    _videoSource = new VideoCaptureDevice(CurrentDevice.MonikerString);
+                    if ((Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor > 1) || Environment.OSVersion.Version.Major > 6)
+                    {
+                        SetDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
+                    }
+                    ClsCommon.WriteLog(Environment.OSVersion.Version.Major + "   Major " + Environment.OSVersion.Version.Major + "  Minor.   METHOD :- StartCamera();");
+                    // Manager.Adapters[0].CurrentDisplayMode.Width, Manager.Adapters[0].CurrentDisplayMode.Height
+                    var rectangle = new Rectangle(0, 0, SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height);
+                    //var rectangle = new Rectangle(0, 0, Program.width, Program.height);
+                    //var rectangle = new Rectangle();
+                    //foreach (var screen in System.Windows.Forms.Screen.AllScreens)
+                    //{
+                    //    rectangle = Rectangle.Union(rectangle, screen.Bounds);
+                    //}
+
+                    heigth = rectangle.Height;
+                    widht = rectangle.Width;
+                    ClsCommon.WriteLog(heigth + "X" + widht + " Method :- Screen Height and width.");
+                    if ((Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor > 1) || Environment.OSVersion.Version.Major > 6)
+                    {
+                        SetDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
+                    }
+                    //  MessageBox.Show(widht + "X" + heigth);
+                    _videoSource = new ScreenCaptureStream(rectangle);
                     _videoSource.NewFrame += video_NewFrame;
                     _videoSource.Start();
                 }
-                else
+                else if (IsWebcamSource)
                 {
-                    MessageBox.Show("Current device can't be null");
+                    _PictureBox = pictureBox;
+                    CurrentDevice = filterInfo;
+
+                    if (CurrentDevice != null)
+                    {
+                        _videoSource = new VideoCaptureDevice(CurrentDevice.MonikerString);
+                        _videoSource.NewFrame += video_NewFrame;
+                        _videoSource.Start();
+                        var video = new VideoCaptureDevice(CurrentDevice.MonikerString).VideoCapabilities;
+                        heigth = video[0].FrameSize.Height;
+                        widht = video[0].FrameSize.Width;
+                        ClsCommon.WriteLog(heigth + "X" + widht + " Method :- video Height and width.");
+                      //  var list = _videoSource;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Current device can't be null");
+                    }
+                }
+                else if (IsIpCameraSource)
+                {
+                    _videoSource = new MJPEGStream(IpCameraUrl);
+                    _videoSource.NewFrame += video_NewFrame;
+                    _videoSource.Start();
                 }
             }
-            else if (IsIpCameraSource)
+            catch(Exception ex)
             {
-                _videoSource = new MJPEGStream(IpCameraUrl);
-                _videoSource.NewFrame += video_NewFrame;
-                _videoSource.Start();
+                ClsCommon.WriteLog(ex.Message+ " Method :- Start Camera");
             }
         }
         [StructLayout(LayoutKind.Sequential)]
@@ -155,13 +180,13 @@ namespace ScreenRecorderNew
         [DllImport("shcore.dll")]
         private static extern int SetProcessDpiAwareness(ProcessDPIAwareness value);
 
-        private static void SetDpiAwareness()
+        private static void SetDpiAwareness(ProcessDPIAwareness processDPIAwareness)
         {
             try
             {
                 if (Environment.OSVersion.Version.Major >= 6)
                 {
-                    SetProcessDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
+                    SetProcessDpiAwareness(processDPIAwareness);
                 }
             }
             catch (EntryPointNotFoundException)//this exception occures if OS does not implement this API, just ignore it.
@@ -179,7 +204,8 @@ namespace ScreenRecorderNew
             {
                 using (Graphics g = Graphics.FromImage(result))
                 {
-                    g.CopyFromScreen(0, 0, 0, 0, Screen.PrimaryScreen.Bounds.Size, CopyPixelOperation.SourceCopy);
+                    Size size = new Size(widht, heigth);
+                    g.CopyFromScreen(0, 0, 0, 0, size, CopyPixelOperation.SourceCopy);
 
                     if (CaptureMouse)
                     {
@@ -274,6 +300,7 @@ namespace ScreenRecorderNew
             }
             catch (Exception exc)
             {
+                ClsCommon.WriteLog(exc.Message+"  METHOD :- New Video Frame");
                 //MessageBox.Show("Error on _videoSource_NewFrame:\n" + exc.Message, "Error", MessageBoxButtons.OK,
                 //    MessageBoxIcon.Error);
                 //StopCamera();
@@ -363,33 +390,46 @@ namespace ScreenRecorderNew
         const string PipePrefix = @"\\.\pipe\";
         public void ffmpegWriter()
         {
-            if (File.Exists(Program.Localpath + "\\output.mp4"))
+            try
             {
-                File.Delete(Program.Localpath + "\\output.mp4");
-            }
+                if (File.Exists(Program.Localpath + "\\output.mp4"))
+                {
+                    File.Delete(Program.Localpath + "\\output.mp4");
+                }
 
-            _videoBuffer = new byte[widht * heigth * 4];
-            var audioPipeName = GetPipeName();
-            var videoPipeName = GetPipeName();
-            string audioInArgs="", audioOutArgs = "";
+                _videoBuffer = new byte[widht * heigth * 4];
+                var audioPipeName = GetPipeName();
+                var videoPipeName = GetPipeName();
+                string audioInArgs = "", audioOutArgs = "";
 
-            var videoInArgs = $@" -thread_queue_size 512 -use_wallclock_as_timestamps 1 -f rawvideo -pix_fmt rgb32 -video_size {widht}x{heigth} -i \\.\pipe\{videoPipeName}";
-            // var videoOutArgs = $"-vcodec libx264 -crf 15 -pix_fmt yuv420p -preset ultrafast -r 10";
-           var videoOutArgs = "-vcodec libx264 -crf 25 -pix_fmt yuv420p -preset ultrafast -r 10";
-            if (_isAudio)
+                var videoInArgs = $@" -thread_queue_size 512 -use_wallclock_as_timestamps 1 -f rawvideo -pix_fmt rgb32 -video_size {widht}x{heigth} -i \\.\pipe\{videoPipeName}";
+                string videoOutArgs = "";
+                if (IsDesktopSource)
+                {
+                    videoOutArgs = $"-vcodec libx264 -crf 15 -pix_fmt yuv420p -preset ultrafast -r 10";
+                }
+                else
+                {
+                    videoOutArgs = "-vcodec libx264 -crf 25 -pix_fmt yuv420p -preset ultrafast -r 10";
+                }
+                if (_isAudio)
+                {
+                    audioInArgs = $" -thread_queue_size 512 -f s16le -acodec pcm_s16le -ar 44100 -ac 2 -i {PipePrefix}{audioPipeName}";
+                    //audioOutArgs = "-c:a aac -strict -2 -b:a 256k";
+                    audioOutArgs = "-c:a aac -strict -2 -b:a 256k";
+                    var audioBufferSize = (int)((1000.0 / 10) * 44.1 * 2 * 2 * 2);
+                    _audioPipe = new NamedPipeServerStream(audioPipeName, PipeDirection.Out, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 0, audioBufferSize);
+                    _ffmpegIn = new NamedPipeServerStream(videoPipeName, PipeDirection.Out, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 0, _videoBuffer.Length);
+                    Process = StartFFmpeg($"{videoInArgs} {audioInArgs} {videoOutArgs} {audioOutArgs} \"{Program.Localpath + "\\output.mp4"}\"", Program.Localpath + "\\output.mp4");
+                }
+                else
+                {
+                    _ffmpegIn = new NamedPipeServerStream(videoPipeName, PipeDirection.Out, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 0, _videoBuffer.Length);
+                    Process = StartFFmpeg($"{videoInArgs} {videoOutArgs} \"{Program.Localpath + "\\output.mp4"}\"", Program.Localpath + "\\output.mp4");
+                }
+            }catch(Exception ex)
             {
-                audioInArgs = $" -thread_queue_size 512 -f s16le -acodec pcm_s16le -ar 44100 -ac 2 -i {PipePrefix}{audioPipeName}";
-                //audioOutArgs = "-c:a aac -strict -2 -b:a 256k";
-                audioOutArgs = "-c:a aac -strict -2 -b:a 256k";
-                  var audioBufferSize = (int)((1000.0 / 10) * 44.1 * 2 * 2 * 2);
-                _audioPipe = new NamedPipeServerStream(audioPipeName, PipeDirection.Out, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 0, audioBufferSize);
-                _ffmpegIn = new NamedPipeServerStream(videoPipeName, PipeDirection.Out, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 0, _videoBuffer.Length);
-                Process = StartFFmpeg($"{videoInArgs} {audioInArgs} {videoOutArgs} {audioOutArgs} \"{Program.Localpath + "\\output.mp4"}\"", Program.Localpath + "\\output.mp4");
-            }
-            else
-            {
-                _ffmpegIn = new NamedPipeServerStream(videoPipeName, PipeDirection.Out, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 0, _videoBuffer.Length);
-                Process = StartFFmpeg($"{videoInArgs} {videoOutArgs} \"{Program.Localpath + "\\output.mp4"}\"", Program.Localpath + "\\output.mp4");
+                ClsCommon.WriteLog(ex.Message + "  Method :- Start FFMPEG");
             }
         }
         Process Process;
@@ -414,19 +454,26 @@ namespace ScreenRecorderNew
         #region Record Audio
         void StartAudioRecord(int AudioDeviceIndex,int Channel)
         {
-            waveSource = new NAudio.Wave.WaveIn();
-            waveSource.WaveFormat = new NAudio.Wave.WaveFormat(44100, Channel);
-            waveSource = new WaveIn
+            try
             {
-                DeviceNumber = AudioDeviceIndex,
-                BufferMilliseconds = (int)Math.Ceiling( (double)(1000 /10)),
-                NumberOfBuffers = 3,
-                WaveFormat = new  WaveFormat(44100, 16, Channel)
-        };
-            waveSource.DataAvailable += new EventHandler<WaveInEventArgs>(waveSource_DataAvailable);
-            waveSource.RecordingStopped += new EventHandler<StoppedEventArgs>(waveSource_RecordingStopped);
-           // waveFile = new NAudio.Wave.WaveFileWriter(Program.Localpath+"\\raw.wav", waveSource.WaveFormat);
-            waveSource.StartRecording();
+                waveSource = new NAudio.Wave.WaveIn();
+                waveSource.WaveFormat = new NAudio.Wave.WaveFormat(44100, Channel);
+                waveSource = new WaveIn
+                {
+                    DeviceNumber = AudioDeviceIndex,
+                    BufferMilliseconds = (int)Math.Ceiling((double)(1000 / 10)),
+                    NumberOfBuffers = 3,
+                    WaveFormat = new WaveFormat(44100, 16, Channel)
+                };
+                waveSource.DataAvailable += new EventHandler<WaveInEventArgs>(waveSource_DataAvailable);
+                waveSource.RecordingStopped += new EventHandler<StoppedEventArgs>(waveSource_RecordingStopped);
+                // waveFile = new NAudio.Wave.WaveFileWriter(Program.Localpath+"\\raw.wav", waveSource.WaveFormat);
+                waveSource.StartRecording();
+            }
+            catch(Exception ex)
+            {
+                ClsCommon.WriteLog(ex.Message + "  Method :-Start Audio Recording.");
+            }
         }
         private void waveSource_RecordingStopped(object sender, StoppedEventArgs e)
         {
@@ -445,14 +492,16 @@ namespace ScreenRecorderNew
         Task _lastAudio;
         private void waveSource_DataAvailable(object sender, WaveInEventArgs e)
         {
-            //if (waveFile != null)
-           // {
-              //  waveFile.Write(e.Buffer, 0, e.BytesRecorded);
+            try
+            {
+                //if (waveFile != null)
+                // {
+                //  waveFile.Write(e.Buffer, 0, e.BytesRecorded);
                 //waveFile.Flush();
                 if (_firstAudio)
                 {
-               
-                    if (!WaitForConnection(_audioPipe,5000))
+
+                    if (!WaitForConnection(_audioPipe, 5000))
                     {
                         throw new Exception("Cannot connect Audio pipe to FFmpeg");
                     }
@@ -463,7 +512,12 @@ namespace ScreenRecorderNew
                 _lastAudio?.Wait();
 
                 _lastAudio = _audioPipe.WriteAsync(e.Buffer, 0, e.Buffer.Length);
-           // }
+                // }
+            }
+            catch(Exception ex)
+            {
+                ClsCommon.WriteLog(ex.Message + "   Method :- AUDIO Data Available.");
+            }
         }
 
         public void Dispose()

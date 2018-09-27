@@ -5,10 +5,12 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 using NAudio.Wave;
 using ScreenRecorderNew.Properties;
 
@@ -22,15 +24,38 @@ namespace ScreenRecorderNew
         int time = 0;
         public Form1()
         {
+            Font = new Font(Font.Name, 8.25f * 96f / CreateGraphics().DpiX, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont);
             InitializeComponent();
         }
-
+        void setheightwidth()
+        {
+            var currentDPI = (int)Registry.GetValue("HKEY_CURRENT_USER\\Control Panel\\Desktop", "LogPixels", 96);
+            var scale = (float)currentDPI / 96;
+            
+            if (scale > 1)
+            {
+               // scale = scale - (float)0.5;
+                this.Height = int.Parse(((this.Height * scale)).ToString().Split('.').First());
+                this.Width = int.Parse(((this.Width * scale)).ToString().Split('.').First());
+                Point point = lblTime.Location;
+                point.X = int.Parse((point.X * scale).ToString().Split('.')[0]);
+                lblTime.Location = point;
+                lblTime.Height = int.Parse(((lblTime.Height * scale)).ToString().Split('.').First());
+                lblTime.Width = int.Parse(((lblTime.Width * scale)).ToString().Split('.').First());
+                lblTime.Font = new Font("Microsoft Sans Serif", lblTime.Font.Size * scale);
+                btnStartStop.Height = int.Parse(((btnStartStop.Height * scale)).ToString().Split('.').First());
+                btnStartStop.Width = int.Parse(((btnStartStop.Width * scale)).ToString().Split('.').First());
+            }
+        }
+     
         private void Form1_Load(object sender, EventArgs e)
         {
             Rectangle workingArea = Screen.GetWorkingArea(this);
             this.Location = new Point((workingArea.Right - Size.Width) / 2,
                                       50);
-            btnStartStop_Click(sender, e);
+           btnStartStop_Click(sender, e);
+           
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -78,6 +103,10 @@ namespace ScreenRecorderNew
                // timerform.ShowDialog();
                 btnStartStop.BackgroundImage = Resources.StopRecording1;
                 this.Text = "Recording...";
+                if(Program.IsRecordAgain)
+                {
+                    this.Text = "Recording Again...";
+                }
                 DeviceCount = WaveIn.DeviceCount;
                 bool isaudio = DeviceCount > 0 ? true : false;
                 MainWindowViewModel = new MainWindowViewModel
@@ -118,10 +147,17 @@ namespace ScreenRecorderNew
             if (!closedByCode)
             {
                 DLOperation dLOperation = new DLOperation();
-                dLOperation.SaveEntry(ClsCommon.UserId, "");
+                dLOperation.SaveEntry(ClsCommon.UserId, "",3);
                 Environment.Exit(1); 
             }
         }
+
+        private void btnStartStop_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.Show("Stop Recording", btnStartStop);
+        }
+
+        
 
         void showplay()
         {

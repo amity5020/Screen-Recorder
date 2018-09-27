@@ -84,7 +84,7 @@ namespace ScreenRecorderNew
                     {
                         timer1.Enabled = false;
                         DLOperation dLOperation = new DLOperation();
-                        dLOperation.SaveEntry(ClsCommon.UserId, Program.cloudFile.BlockBlob.SnapshotQualifiedStorageUri.PrimaryUri.ToString());
+                        dLOperation.SaveEntry(ClsCommon.UserId, Program.cloudFile.BlockBlob.SnapshotQualifiedStorageUri.PrimaryUri.ToString(),2);
 
                     }
                 }

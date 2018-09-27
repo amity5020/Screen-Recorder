@@ -7,10 +7,12 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace ScreenRecorderNew
 {
@@ -19,8 +21,79 @@ namespace ScreenRecorderNew
         public VideoPreview()
         {
             InitializeComponent();
+
+            if ((Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor > 1) || Environment.OSVersion.Version.Major > 6)
+            {
+                SetDpiAwareness();
+            }
+//setheightwidth();
+        }
+        private enum ProcessDPIAwareness
+        {
+            ProcessDPIUnaware = 0,
+            ProcessSystemDPIAware = 1,
+            ProcessPerMonitorDPIAware = 2
         }
 
+        [DllImport("shcore.dll")]
+        private static extern int SetProcessDpiAwareness(ProcessDPIAwareness value);
+
+        private static void SetDpiAwareness()
+        {
+            try
+            {
+                if (Environment.OSVersion.Version.Major >= 6)
+                {
+                    SetProcessDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
+                }
+            }
+            catch (EntryPointNotFoundException)//this exception occures if OS does not implement this API, just ignore it.
+            {
+            }
+        }
+        void setheightwidth()
+        {
+            var currentDPI = (int)Registry.GetValue("HKEY_CURRENT_USER\\Control Panel\\Desktop", "LogPixels", 96);
+            var scale = (float)currentDPI / 96;
+            if (scale > 1)
+            {
+               this.Width = int.Parse(((this.Width * scale)).ToString().Split('.').First());
+
+               
+                btnRecordAgain.Width = int.Parse(((btnRecordAgain.Width * scale)).ToString().Split('.').First());
+                btnUpload.Width = int.Parse(((btnUpload.Width * scale)).ToString().Split('.').First());
+
+
+               // axWindowsMediaPlayer1.Width = int.Parse(((axWindowsMediaPlayer1.Width * scale)).ToString().Split('.').First());
+               // scale = scale - (float)0.7;
+                this.Height = int.Parse(((this.Height * scale)).ToString().Split('.').First());
+                if(this.Height> SystemInformation.WorkingArea.Height)
+                {
+                   this.Height = SystemInformation.WorkingArea.Height;
+                }
+                if (this.Width > SystemInformation.WorkingArea.Width)
+                {
+                    this.Width= SystemInformation.WorkingArea.Width;
+                }
+                    // axWindowsMediaPlayer1.Height = int.Parse(((axWindowsMediaPlayer1.Height * scale)).ToString().Split('.').First());
+                    btnUpload.Height = int.Parse(((btnUpload.Height * (scale*0.7))).ToString().Split('.').First());
+                btnRecordAgain.Height = int.Parse(((btnRecordAgain.Height * (scale * 0.7))).ToString().Split('.').First());
+                Point point = btnUpload.Location;
+                point.X = int.Parse((point.X * scale).ToString().Split('.')[0]);
+                btnUpload.Location = point;
+                progressBar1.Height= int.Parse(((progressBar1.Height * scale)).ToString().Split('.').First());
+                progressBar1.Width = int.Parse(((progressBar1.Width * scale)).ToString().Split('.').First());
+                point = progressBar1.Location;
+                point.X = int.Parse((point.X * scale).ToString().Split('.')[0]);
+                progressBar1.Location = point;
+               // btnUpload.Margin.Bottom = int.Parse((btnUpload.Margin.Bottom * scale).ToString().Split('.')[0]);
+                point = lblProgress.Location;
+                point.X = int.Parse((point.X * scale).ToString().Split('.')[0]);
+                lblProgress.Location = point;
+                lblProgress.Font= new Font("Microsoft Sans Serif", lblProgress.Font.Size * scale);
+
+            }
+        }
         private void VideoPreview_Load(object sender, EventArgs e)
         {
             axWindowsMediaPlayer1.URL = Program.Localpath + "\\output.mp4";
@@ -32,6 +105,7 @@ namespace ScreenRecorderNew
         bool isclosedbycode = false;
         private void btnRecordAgain_Click(object sender, EventArgs e)
         {
+            Program.IsRecordAgain = true;
             RecordVideo.IsRecordLoad = true;
             timerform form1 = new timerform();
             form1.Show();
@@ -46,9 +120,11 @@ namespace ScreenRecorderNew
                 DialogResult dialog = MessageBox.Show("Are you sure close application and discard recording?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialog == DialogResult.Yes)
                 {
-
-                    DLOperation dLOperations = new DLOperation();
-                    dLOperations.SaveEntry(ClsCommon.UserId, "");
+                    if (CheckForInternetConnection())
+                    {
+                        DLOperation dLOperations = new DLOperation();
+                        dLOperations.SaveEntry(ClsCommon.UserId, "",3);
+                    }
                     Environment.Exit(1);
                 }else
                 {
@@ -140,7 +216,7 @@ namespace ScreenRecorderNew
                     {
                         // timer1.Enabled = false;
                         DLOperation dLOperation = new DLOperation();
-                        dLOperation.SaveEntry(ClsCommon.UserId, Program.cloudFile.BlockBlob.SnapshotQualifiedStorageUri.PrimaryUri.ToString());
+                        dLOperation.SaveEntry(ClsCommon.UserId, Program.cloudFile.BlockBlob.SnapshotQualifiedStorageUri.PrimaryUri.ToString(),2);
 
                     }
                     int percent = (CurrentChunk * 100 / (int)totalChunk) ;

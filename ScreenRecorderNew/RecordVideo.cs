@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -71,16 +72,33 @@ namespace ScreenRecorderNew
         bool ClosedByCode = false;
         private void RecordVideo_Load(object sender, EventArgs e)
         {
+           // GetParent();
             GetDevices();
             GetAudioDevices();
             startCamera();
             cmbWebCamera.SelectedIndexChanged += cmbWebCamera_SelectedIndexChanged;
-            var rectangle = new Rectangle();
-            foreach (var screen in System.Windows.Forms.Screen.AllScreens)
-            {
-                rectangle = Rectangle.Union(rectangle, screen.Bounds);
-            }
-            MessageBox.Show(this,rectangle.Height.ToString() + " X " + rectangle.Width.ToString());
+           
+        }
+        private  void parent_exit(object sender, EventArgs e)
+        {
+            
+        }
+        private  void GetParent()
+        {
+            var myId = Process.GetCurrentProcess().Id;
+            var query = string.Format("SELECT ParentProcessId FROM Win32_Process WHERE ProcessId = {0}", myId);
+            var search = new ManagementObjectSearcher("root\\CIMV2", query);
+            var results = search.Get().GetEnumerator();
+            results.MoveNext();
+            var queryObj = results.Current;
+            var parentId = (uint)queryObj["ParentProcessId"];
+            var parent = Process.GetProcessById((int)parentId);
+            
+            MessageBox.Show("I was started by " + parent.ProcessName);
+
+            parent.Exited += parent_exit;
+           // parent.WaitForExit();
+            //  Console.ReadLine();
         }
         private void RecordVideo_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -117,7 +135,7 @@ namespace ScreenRecorderNew
             if (!ClosedByCode)
             {
                 DLOperation dLOperation = new DLOperation();
-                dLOperation.SaveEntry(ClsCommon.UserId, "");
+                dLOperation.SaveEntry(ClsCommon.UserId, "",3);
                 MainWindowView.StopCamera();
                 Application.Exit();
             }
