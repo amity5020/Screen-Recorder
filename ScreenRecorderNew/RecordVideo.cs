@@ -40,6 +40,8 @@ namespace ScreenRecorderNew
             filterInfos = MainWindowView.GetVideoDevices();
             if(filterInfos==null||filterInfos.Count==0)
             {
+                DLOperation dLOperation = new DLOperation();
+                dLOperation.SaveEntry(ClsCommon.UserId, "", 3);
                 MessageBox.Show("Webcam not available");
                 Environment.Exit(1);
             }else

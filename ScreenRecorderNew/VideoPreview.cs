@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Win32;
 
 namespace ScreenRecorderNew
 {
@@ -21,86 +11,20 @@ namespace ScreenRecorderNew
         public VideoPreview()
         {
             InitializeComponent();
-
-            if ((Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor > 1) || Environment.OSVersion.Version.Major > 6)
-            {
-                SetDpiAwareness();
-            }
-//setheightwidth();
-        }
-        private enum ProcessDPIAwareness
-        {
-            ProcessDPIUnaware = 0,
-            ProcessSystemDPIAware = 1,
-            ProcessPerMonitorDPIAware = 2
-        }
-
-        [DllImport("shcore.dll")]
-        private static extern int SetProcessDpiAwareness(ProcessDPIAwareness value);
-
-        private static void SetDpiAwareness()
-        {
-            try
-            {
-                if (Environment.OSVersion.Version.Major >= 6)
-                {
-                    SetProcessDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
-                }
-            }
-            catch (EntryPointNotFoundException)//this exception occures if OS does not implement this API, just ignore it.
-            {
-            }
-        }
-        void setheightwidth()
-        {
-            var currentDPI = (int)Registry.GetValue("HKEY_CURRENT_USER\\Control Panel\\Desktop", "LogPixels", 96);
-            var scale = (float)currentDPI / 96;
-            if (scale > 1)
-            {
-               this.Width = int.Parse(((this.Width * scale)).ToString().Split('.').First());
-
-               
-                btnRecordAgain.Width = int.Parse(((btnRecordAgain.Width * scale)).ToString().Split('.').First());
-                btnUpload.Width = int.Parse(((btnUpload.Width * scale)).ToString().Split('.').First());
-
-
-               // axWindowsMediaPlayer1.Width = int.Parse(((axWindowsMediaPlayer1.Width * scale)).ToString().Split('.').First());
-               // scale = scale - (float)0.7;
-                this.Height = int.Parse(((this.Height * scale)).ToString().Split('.').First());
-                if(this.Height> SystemInformation.WorkingArea.Height)
-                {
-                   this.Height = SystemInformation.WorkingArea.Height;
-                }
-                if (this.Width > SystemInformation.WorkingArea.Width)
-                {
-                    this.Width= SystemInformation.WorkingArea.Width;
-                }
-                    // axWindowsMediaPlayer1.Height = int.Parse(((axWindowsMediaPlayer1.Height * scale)).ToString().Split('.').First());
-                    btnUpload.Height = int.Parse(((btnUpload.Height * (scale*0.7))).ToString().Split('.').First());
-                btnRecordAgain.Height = int.Parse(((btnRecordAgain.Height * (scale * 0.7))).ToString().Split('.').First());
-                Point point = btnUpload.Location;
-                point.X = int.Parse((point.X * scale).ToString().Split('.')[0]);
-                btnUpload.Location = point;
-                progressBar1.Height= int.Parse(((progressBar1.Height * scale)).ToString().Split('.').First());
-                progressBar1.Width = int.Parse(((progressBar1.Width * scale)).ToString().Split('.').First());
-                point = progressBar1.Location;
-                point.X = int.Parse((point.X * scale).ToString().Split('.')[0]);
-                progressBar1.Location = point;
-               // btnUpload.Margin.Bottom = int.Parse((btnUpload.Margin.Bottom * scale).ToString().Split('.')[0]);
-                point = lblProgress.Location;
-                point.X = int.Parse((point.X * scale).ToString().Split('.')[0]);
-                lblProgress.Location = point;
-                lblProgress.Font= new Font("Microsoft Sans Serif", lblProgress.Font.Size * scale);
-
-            }
         }
         private void VideoPreview_Load(object sender, EventArgs e)
         {
+            Thread thread = new Thread(StartPlay);
+            thread.Start();
+        }
+        void StartPlay()
+        {
+            base.Invoke(new MethodInvoker(()=>{
             axWindowsMediaPlayer1.URL = Program.Localpath + "\\output.mp4";
             axWindowsMediaPlayer1.settings.volume = 100;
             progressBar1.Hide();
             lblProgress.Hide();
-            
+            }));
         }
         bool isclosedbycode = false;
         private void btnRecordAgain_Click(object sender, EventArgs e)
@@ -112,7 +36,6 @@ namespace ScreenRecorderNew
             isclosedbycode = true;
             this.Close();
         }
-
         private void VideoPreview_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!isclosedbycode)
@@ -132,9 +55,6 @@ namespace ScreenRecorderNew
                     return;
                 }
             }
-
-           // DLOperation dLOperation = new DLOperation();
-          //  dLOperation.SaveEntry(ClsCommon.UserId, "");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -244,42 +164,7 @@ namespace ScreenRecorderNew
         }
         #endregion
         #region round Button
-        class RoundedButton : Button
-        {
-            GraphicsPath GetRoundPath(RectangleF Rect, int radius)
-            {
-                float r2 = radius / 2f;
-                GraphicsPath GraphPath = new GraphicsPath();
-
-                GraphPath.AddArc(Rect.X, Rect.Y, radius, radius, 180, 90);
-                GraphPath.AddLine(Rect.X + r2, Rect.Y, Rect.Width - r2, Rect.Y);
-                GraphPath.AddArc(Rect.X + Rect.Width - radius, Rect.Y, radius, radius, 270, 90);
-                GraphPath.AddLine(Rect.Width, Rect.Y + r2, Rect.Width, Rect.Height - r2);
-                GraphPath.AddArc(Rect.X + Rect.Width - radius,
-                                 Rect.Y + Rect.Height - radius, radius, radius, 0, 90);
-                GraphPath.AddLine(Rect.Width - r2, Rect.Height, Rect.X + r2, Rect.Height);
-                GraphPath.AddArc(Rect.X, Rect.Y + Rect.Height - radius, radius, radius, 90, 90);
-                GraphPath.AddLine(Rect.X, Rect.Height - r2, Rect.X, Rect.Y + r2);
-
-                GraphPath.CloseFigure();
-                return GraphPath;
-            }
-
-            protected override void OnPaint(PaintEventArgs e)
-            {
-                base.OnPaint(e);
-                RectangleF Rect = new RectangleF(0, 0, this.Width, this.Height);
-                GraphicsPath GraphPath = GetRoundPath(Rect, 50);
-
-                this.Region = new Region(GraphPath);
-                using (Pen pen = new Pen(Color.CadetBlue, 1.75f))
-                {
-                    pen.Alignment = PenAlignment.Inset;
-                    e.Graphics.DrawPath(pen, GraphPath);
-                }
-            }
-        }
-
+     
         #endregion
     }
 }

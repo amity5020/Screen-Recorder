@@ -46,7 +46,7 @@
             this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(0, 0);
             this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
             this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
-            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(664, 361);
+            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(626, 377);
             this.axWindowsMediaPlayer1.TabIndex = 0;
             // 
             // btnRecordAgain
@@ -59,18 +59,17 @@
             this.btnRecordAgain.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnRecordAgain.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRecordAgain.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnRecordAgain.Location = new System.Drawing.Point(5, 365);
+            this.btnRecordAgain.Location = new System.Drawing.Point(12, 393);
             this.btnRecordAgain.Name = "btnRecordAgain";
-            this.btnRecordAgain.Size = new System.Drawing.Size(137, 33);
+            this.btnRecordAgain.Size = new System.Drawing.Size(148, 36);
             this.btnRecordAgain.TabIndex = 1;
             this.btnRecordAgain.Text = "Record Again";
-            this.btnRecordAgain.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnRecordAgain.UseVisualStyleBackColor = false;
             this.btnRecordAgain.Click += new System.EventHandler(this.btnRecordAgain_Click);
             // 
             // btnUpload
             // 
-            this.btnUpload.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnUpload.AutoSize = true;
             this.btnUpload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnUpload.Cursor = System.Windows.Forms.Cursors.Arrow;
@@ -78,28 +77,27 @@
             this.btnUpload.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnUpload.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpload.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnUpload.Location = new System.Drawing.Point(165, 365);
+            this.btnUpload.Location = new System.Drawing.Point(168, 393);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(232, 33);
+            this.btnUpload.Size = new System.Drawing.Size(196, 36);
             this.btnUpload.TabIndex = 2;
             this.btnUpload.Text = "Looks Good. Continue";
-            this.btnUpload.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnUpload.UseVisualStyleBackColor = false;
             this.btnUpload.Click += new System.EventHandler(this.button1_Click);
             // 
             // progressBar1
             // 
-            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(405, 375);
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.progressBar1.Location = new System.Drawing.Point(376, 406);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(194, 23);
             this.progressBar1.TabIndex = 3;
             // 
             // lblProgress
             // 
-            this.lblProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblProgress.AutoSize = true;
-            this.lblProgress.Location = new System.Drawing.Point(605, 375);
+            this.lblProgress.Location = new System.Drawing.Point(573, 412);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(32, 17);
             this.lblProgress.TabIndex = 4;
@@ -112,7 +110,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(665, 440);
+            this.ClientSize = new System.Drawing.Size(625, 440);
             this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnUpload);

@@ -117,12 +117,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2869CF146713E5A3D6443F194C194AFA"
-        "OwnerKey" = "8:_B8EA043E2E96498E9DBBA427B5C3BD64"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_2956D2A6788A096EA307053F68E4D1EE"
         "OwnerKey" = "8:_6C4969215FC449D182DE2C78755D5F38"
         "MsmSig" = "8:_UNDEFINED"
@@ -267,6 +261,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_5B7BEA6FA5464B269096E6A320F8F2BA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_67E785A33B3E449498201546EE6F96C0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -305,6 +305,12 @@
         {
         "MsmKey" = "8:_7093FF309FDD9C72D01897A979254E11"
         "OwnerKey" = "8:_476326E8EF0946EB65E1AECC6BBD76B2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7216801F9974D39E933D5A9D3CE7699C"
+        "OwnerKey" = "8:_6C4969215FC449D182DE2C78755D5F38"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -724,6 +730,12 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5B7BEA6FA5464B269096E6A320F8F2BA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B8EA043E2E96498E9DBBA427B5C3BD64"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -755,6 +767,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_DE5144D604F16C0EF44B89EC6C83BCC6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_7216801F9974D39E933D5A9D3CE7699C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1198,6 +1216,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
     }
@@ -2150,6 +2176,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5B7BEA6FA5464B269096E6A320F8F2BA"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:WindowsFormsApp3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_5B7BEA6FA5464B269096E6A320F8F2BA"
+                    {
+                    "Name" = "8:resolution.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\ScreenRecorderNew\\bin\\Debug\\resolution.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_AEE083C698C54559903A3E8D2642482C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_67E785A33B3E449498201546EE6F96C0"
             {
             "SourcePath" = "8:..\\ScreenRecorderNew\\bin\\Debug\\ScreenRecorder.exe.config"
@@ -2215,6 +2272,37 @@
                     }
                 }
             "SourcePath" = "8:System.ComponentModel.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_AEE083C698C54559903A3E8D2642482C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7216801F9974D39E933D5A9D3CE7699C"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:GetResolution, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_7216801F9974D39E933D5A9D3CE7699C"
+                    {
+                    "Name" = "8:GetResolution.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:GetResolution.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_AEE083C698C54559903A3E8D2642482C"
@@ -3733,7 +3821,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Screen Recorder"
         "ProductCode" = "8:{7C0C7CC7-0440-4750-90D7-51DB849031A4}"
-        "PackageCode" = "8:{EEEFEE72-8C31-454D-B199-D10DEF3D73B3}"
+        "PackageCode" = "8:{6416DB57-A9F9-4FCB-B7C2-3F18AEA96062}"
         "UpgradeCode" = "8:{12A705F9-7EE0-4A61-BE54-E4204E5D8E25}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

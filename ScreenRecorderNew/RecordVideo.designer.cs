@@ -49,7 +49,7 @@ namespace ScreenRecorderNew
             this.lblRecordTime.AutoSize = true;
             this.lblRecordTime.Location = new System.Drawing.Point(12, 368);
             this.lblRecordTime.Name = "lblRecordTime";
-            this.lblRecordTime.Size = new System.Drawing.Size(0, 17);
+            this.lblRecordTime.Size = new System.Drawing.Size(0, 20);
             this.lblRecordTime.TabIndex = 1;
             // 
             // timerRecordTime
@@ -70,7 +70,7 @@ namespace ScreenRecorderNew
             this.cmbWebCamera.FormattingEnabled = true;
             this.cmbWebCamera.Location = new System.Drawing.Point(68, 5);
             this.cmbWebCamera.Name = "cmbWebCamera";
-            this.cmbWebCamera.Size = new System.Drawing.Size(203, 21);
+            this.cmbWebCamera.Size = new System.Drawing.Size(203, 24);
             this.cmbWebCamera.TabIndex = 4;
             // 
             // label1
@@ -78,7 +78,7 @@ namespace ScreenRecorderNew
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(-1, 7);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 17);
+            this.label1.Size = new System.Drawing.Size(75, 20);
             this.label1.TabIndex = 5;
             this.label1.Text = "Webcam";
             // 
@@ -112,7 +112,7 @@ namespace ScreenRecorderNew
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(272, 7);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 17);
+            this.label2.Size = new System.Drawing.Size(96, 20);
             this.label2.TabIndex = 7;
             this.label2.Text = "Microphone";
             // 
@@ -124,12 +124,12 @@ namespace ScreenRecorderNew
             this.cmbMicrophone.FormattingEnabled = true;
             this.cmbMicrophone.Location = new System.Drawing.Point(360, 5);
             this.cmbMicrophone.Name = "cmbMicrophone";
-            this.cmbMicrophone.Size = new System.Drawing.Size(178, 21);
+            this.cmbMicrophone.Size = new System.Drawing.Size(178, 24);
             this.cmbMicrophone.TabIndex = 6;
             // 
             // RecordVideo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(540, 390);

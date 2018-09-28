@@ -28,7 +28,6 @@ namespace ScreenRecorderNew
     {
         #region Private fields
         private IVideoSource _videoSource;
-        private VideoFileWriter _writer;
         private bool _recording;
         private DateTime? _firstFrameTime;
         public NAudio.Wave.WaveIn waveSource = null;
@@ -64,6 +63,7 @@ namespace ScreenRecorderNew
         public string IpCameraUrl { get; set; }
 
         public FilterInfo CurrentDevice { get; set; }
+        float wf=1, hf = 1;
 
      
         #endregion
@@ -89,28 +89,25 @@ namespace ScreenRecorderNew
             {
                 if (IsDesktopSource)
                 {
-                    if ((Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor > 1) || Environment.OSVersion.Version.Major > 6)
+                    
+                    if (File.Exists(Program.Localpath + "\\resolution.txt"))
                     {
-                        SetDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
+                        var str = File.ReadAllText(Program.Localpath + "\\resolution.txt").Split('_');
+                        Program.width = int.Parse(str[0]);
+                        Program.height = int.Parse(str[1]);
+                        wf = float.Parse( str[2]);
+                        hf= float.Parse( str[3]);
+                    }
+                    else
+                    {
+                        Program.width = SystemInformation.VirtualScreen.Width;
+                        Program.height = SystemInformation.VirtualScreen.Height;
                     }
                     ClsCommon.WriteLog(Environment.OSVersion.Version.Major + "   Major " + Environment.OSVersion.Version.Major + "  Minor.   METHOD :- StartCamera();");
-                    // Manager.Adapters[0].CurrentDisplayMode.Width, Manager.Adapters[0].CurrentDisplayMode.Height
-                    var rectangle = new Rectangle(0, 0, SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height);
-                    //var rectangle = new Rectangle(0, 0, Program.width, Program.height);
-                    //var rectangle = new Rectangle();
-                    //foreach (var screen in System.Windows.Forms.Screen.AllScreens)
-                    //{
-                    //    rectangle = Rectangle.Union(rectangle, screen.Bounds);
-                    //}
-
+                    var rectangle = new Rectangle(0, 0, Program.width, Program.height);
                     heigth = rectangle.Height;
                     widht = rectangle.Width;
                     ClsCommon.WriteLog(heigth + "X" + widht + " Method :- Screen Height and width.");
-                    if ((Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor > 1) || Environment.OSVersion.Version.Major > 6)
-                    {
-                        SetDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
-                    }
-                    //  MessageBox.Show(widht + "X" + heigth);
                     _videoSource = new ScreenCaptureStream(rectangle);
                     _videoSource.NewFrame += video_NewFrame;
                     _videoSource.Start();
@@ -129,7 +126,6 @@ namespace ScreenRecorderNew
                         heigth = video[0].FrameSize.Height;
                         widht = video[0].FrameSize.Width;
                         ClsCommon.WriteLog(heigth + "X" + widht + " Method :- video Height and width.");
-                      //  var list = _videoSource;
                     }
                     else
                     {
@@ -216,7 +212,7 @@ namespace ScreenRecorderNew
                         {
                             if (pci.flags == CURSOR_SHOWING)
                             {
-                                DrawIcon(g.GetHdc(), pci.ptScreenPos.x, pci.ptScreenPos.y, pci.hCursor);
+                                DrawIcon(g.GetHdc(),int.Parse( (pci.ptScreenPos.x*wf).ToString().Split('.')[0]), int.Parse((pci.ptScreenPos.y * hf).ToString().Split('.')[0]), pci.hCursor);
                                 g.ReleaseHdc();
                             }
                         }
@@ -262,9 +258,9 @@ namespace ScreenRecorderNew
                         bitmapnew = bitmap;
                         if (IsDesktopSource)
                         {
-                            bitmapnew = CaptureScreen(true,bitmap);
+                            bitmapnew = CaptureScreen(true, bitmap);
                         }
-                       // var _videoBuffers = ImageToByte(bitmapnew);
+                        // var _videoBuffers = ImageToByte(bitmapnew);
                         var bits = bitmapnew.LockBits(new Rectangle(System.Drawing.Point.Empty, bitmapnew.Size), ImageLockMode.ReadOnly, PixelFormat.Format32bppRgb);
 
                         Parallel.For(0, heigth, Y =>

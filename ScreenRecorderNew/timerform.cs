@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
 using System.Diagnostics;
-using System.Management;
+using System.Threading;
 
 namespace ScreenRecorderNew
 {
@@ -46,28 +39,52 @@ namespace ScreenRecorderNew
         int count = 3;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (count == 1)
-            { lblTimer.Text = "Start"; }
-            else if (count == 0)
+            try
             {
-                timer1.Stop(); this.Hide();
-                if (Program.eRequestFor == RequestFor.ScreenRecording)
+                if (count == 1)
                 {
-                    Form1 form1 = new Form1();
-                    form1.Show();
+                    if (Program.eRequestFor == RequestFor.ScreenRecording)
+                    {
+                        Thread thread = new Thread(Getresolution);
+                        thread.Start();
+                    }
+                    lblTimer.Text = "Start";
+                }
+                else if (count == 0)
+                {
+                    timer1.Stop(); this.Hide();
+                    if (Program.eRequestFor == RequestFor.ScreenRecording)
+                    {
+                        Form1 form1 = new Form1();
+                        form1.Show();
+                    }
+                    else
+                    {
+                        this.Hide();
+                    }
                 }
                 else
                 {
-                    this.Hide();
+                    lblTimer.Text = (count - 1).ToString();
                 }
-            }
-            else
+                count--;
+            }catch(Exception ex)
             {
-                lblTimer.Text = (count - 1).ToString();
+                ClsCommon.WriteLog(ex.Message + " Method:- Timer Tick.");
             }
-            count--;
         }
-     
+     void Getresolution()
+        {
+            try
+            {
+                Process.Start(Application.ExecutablePath.Replace("ScreenRecorder.exe","") +"\\resolution.exe");
+                ClsCommon.WriteLog(Application.ExecutablePath + " Method:- GetResolution.");
+            }
+            catch(Exception ex)
+            {
+                ClsCommon.WriteLog(ex.Message + " Method:- GetResolution.");
+            }
+        }
         private void timerform_Paint(object sender, PaintEventArgs e)
         {
             //var hb = new HatchBrush(HatchStyle.Percent90, this.TransparencyKey);
