@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,13 +12,14 @@ namespace ScreenRecorderNew
 {
     static class Program
     {
-        public static RequestFor eRequestFor = RequestFor.ScreenRecording;
+        public static RequestFor eRequestFor = RequestFor.VideoRecording;
         public static string Localpath = "";
         public static CloudFile cloudFile;
         public static string exestring = "";
         public static bool IsRecordAgain = false;
         public static int height;
         public static int width;
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -25,6 +27,7 @@ namespace ScreenRecorderNew
 
         static void Main()
         {
+            ClsCommon.UserId = "test";
             //MessageBox.Show(Environment.OSVersion.ToString());
             // GetParent();
 
@@ -37,20 +40,16 @@ namespace ScreenRecorderNew
             ClsCommon.WriteLog("**************************************************************************");
             ClsCommon.WriteLog("**************************************************************************");
             ClsCommon.WriteLog("Application Launched.");
-           // if (!CheckForProtocolMessage())
-            if (false)
+            if (!CheckForProtocolMessage())
+           // if (false)
             {
                 MessageBox.Show("Please launch the Screen Recorder only from the Trezle coaching application.");
                 Environment.Exit(1);
             }
             else
             {
-                DLOperation dLOperation = new DLOperation();
-                dLOperation.SaveEntry(ClsCommon.UserId, "", 1);
-                if (exestring.Trim() != "")
-                {
-                    dLOperation.SaveExeString(exestring);
-                }
+                Thread threadLog = new Thread(SaveLog);
+                threadLog.Start();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 if (eRequestFor == RequestFor.ScreenRecording)
@@ -65,7 +64,12 @@ namespace ScreenRecorderNew
             }
         }
 
+       static void SaveLog()
+        {
+            DLOperation dLOperation = new DLOperation();
+            dLOperation.SaveEntry(ClsCommon.UserId, "", 1);
 
+        }
         private static bool CheckForProtocolMessage()
         {
             string[] arguments = Environment.GetCommandLineArgs();

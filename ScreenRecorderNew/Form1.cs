@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using NAudio.Wave;
@@ -19,8 +21,17 @@ namespace ScreenRecorderNew
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            float hfact=1, wfact=1;
+            if (File.Exists(Program.Localpath + "\\resolution.txt"))
+            {
+                var str = File.ReadAllText(Program.Localpath + "\\resolution.txt").Split('_');
+                Program.width = int.Parse(str[0]);
+                Program.height = int.Parse(str[1]);
+                wfact = float.Parse(str[2]);
+                hfact = float.Parse(str[3]);
+            }
             Rectangle workingArea = Screen.GetWorkingArea(this);
-            this.Location = new Point((workingArea.Right - Size.Width) / 2,
+            this.Location = new Point(int.Parse(((float)workingArea.Right * wfact - (float)Size.Width * wfact).ToString().Split('.')[0])/ 2,
                                       50);
            btnStartStop_Click(sender, e);
            
@@ -61,28 +72,38 @@ namespace ScreenRecorderNew
             }
             else
             {
+                Thread thread = new Thread(StartRecord);
+                thread.Start();
+            }
+        }
+        void StartRecord()
+        {
+            base.Invoke(new MethodInvoker(() =>
+            {
                 isrecording = true;
                 btnStartStop.BackgroundImage = Resources.StopRecording1;
                 this.Text = "Recording...";
-                if(Program.IsRecordAgain)
+                if (Program.IsRecordAgain)
                 {
                     this.Text = "Recording Again...";
                 }
                 DeviceCount = WaveIn.DeviceCount;
                 bool isaudio = DeviceCount > 0 ? true : false;
-                MainWindowViewModel = new MainWindowViewModel
-                {
-                    IsDesktopSource = true,
-                    IsIpCameraSource = false,
-                    IsWebcamSource = false
-                };
-                MainWindowViewModel.StartCamera();
-                MainWindowViewModel.StartRecording(isaudio,0,2);
+                MainWindowViewModel.StartRecording(isaudio, 0, 2);
                 timer1.Interval = 1000;
                 timer1.Start();
-            }
+            }));
         }
-
+        public void StartCamera()
+        {
+            MainWindowViewModel = new MainWindowViewModel
+            {
+                IsDesktopSource = true,
+                IsIpCameraSource = false,
+                IsWebcamSource = false
+            };
+            MainWindowViewModel.StartCamera();
+        }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isrecording)

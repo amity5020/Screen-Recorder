@@ -37,6 +37,7 @@ namespace ScreenRecorderNew
         }
 
         int count = 3;
+        Form1 form1 ;
         private void timer1_Tick(object sender, EventArgs e)
         {
             try
@@ -45,6 +46,7 @@ namespace ScreenRecorderNew
                 {
                     if (Program.eRequestFor == RequestFor.ScreenRecording)
                     {
+                        form1 = new Form1();
                         Thread thread = new Thread(Getresolution);
                         thread.Start();
                     }
@@ -55,7 +57,6 @@ namespace ScreenRecorderNew
                     timer1.Stop(); this.Hide();
                     if (Program.eRequestFor == RequestFor.ScreenRecording)
                     {
-                        Form1 form1 = new Form1();
                         form1.Show();
                     }
                     else
@@ -73,11 +74,16 @@ namespace ScreenRecorderNew
                 ClsCommon.WriteLog(ex.Message + " Method:- Timer Tick.");
             }
         }
+        
      void Getresolution()
         {
             try
             {
-                Process.Start(Application.ExecutablePath.Replace("ScreenRecorder.exe","") +"\\resolution.exe");
+                Process.Start(Application.ExecutablePath.Replace("ScreenRecorder.exe","") +"\\resolution.exe").WaitForExit();
+                base.Invoke(new MethodInvoker(() =>
+                {
+                    form1.StartCamera();
+                }));
                 ClsCommon.WriteLog(Application.ExecutablePath + " Method:- GetResolution.");
             }
             catch(Exception ex)

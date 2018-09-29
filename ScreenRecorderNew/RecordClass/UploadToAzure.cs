@@ -59,7 +59,7 @@ namespace ScreenRecorderNew
         public CloudFile SetMetadata(int blocksCount, string fileName, long fileSize, string AssetIds)
         {
             var container = CloudStorageAccount.Parse(
-                "DefaultEndpointsProtocol=https;AccountName=videostoraged1;AccountKey=8vWyv5J4XOgk6ymkdLdunZV6tdhVMC1qCu59gFADVKJzfhtklIZkMP0KJrb+KtdJSgNOv4R2KKn/dN3Mg+SiiQ==;EndpointSuffix=core.windows.net").CreateCloudBlobClient()
+                "DefaultEndpointsProtocol=https;AccountName=msftstorage;AccountKey=vFlxA7xhD30xxJkV5omNPNRwLgqa4J0XW6ca708OZea2rzYhN80LT/zoFQM3XnfZT6Rs3MeCknZ7hl3UfOUdPA==;EndpointSuffix=core.windows.net").CreateCloudBlobClient()
                 .GetContainerReference("video");
             container.CreateIfNotExists();
             var fileToUpload = new CloudFile()
