@@ -46,44 +46,46 @@
             this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(0, 0);
             this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
             this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
-            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(626, 377);
+            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(626, 397);
             this.axWindowsMediaPlayer1.TabIndex = 0;
             // 
             // btnRecordAgain
             // 
             this.btnRecordAgain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnRecordAgain.AutoSize = true;
-            this.btnRecordAgain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnRecordAgain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
             this.btnRecordAgain.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.btnRecordAgain.FlatAppearance.BorderSize = 0;
-            this.btnRecordAgain.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnRecordAgain.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRecordAgain.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
+            this.btnRecordAgain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRecordAgain.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRecordAgain.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnRecordAgain.Location = new System.Drawing.Point(12, 393);
+            this.btnRecordAgain.Location = new System.Drawing.Point(12, 400);
             this.btnRecordAgain.Name = "btnRecordAgain";
-            this.btnRecordAgain.Size = new System.Drawing.Size(148, 36);
+            this.btnRecordAgain.Size = new System.Drawing.Size(148, 32);
             this.btnRecordAgain.TabIndex = 1;
             this.btnRecordAgain.Text = "Record Again";
             this.btnRecordAgain.UseVisualStyleBackColor = false;
             this.btnRecordAgain.Click += new System.EventHandler(this.btnRecordAgain_Click);
+            this.btnRecordAgain.Paint += new System.Windows.Forms.PaintEventHandler(this.roundButton_Paint);
             // 
             // btnUpload
             // 
             this.btnUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnUpload.AutoSize = true;
-            this.btnUpload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnUpload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
             this.btnUpload.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.btnUpload.FlatAppearance.BorderSize = 0;
-            this.btnUpload.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnUpload.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpload.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
+            this.btnUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpload.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpload.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnUpload.Location = new System.Drawing.Point(168, 393);
+            this.btnUpload.Location = new System.Drawing.Point(168, 400);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(196, 36);
+            this.btnUpload.Size = new System.Drawing.Size(196, 32);
             this.btnUpload.TabIndex = 2;
             this.btnUpload.Text = "Looks Good. Continue";
             this.btnUpload.UseVisualStyleBackColor = false;
             this.btnUpload.Click += new System.EventHandler(this.button1_Click);
+            this.btnUpload.Paint += new System.Windows.Forms.PaintEventHandler(this.btnUpload_Paint);
             // 
             // progressBar1
             // 

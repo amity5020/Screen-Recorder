@@ -43,22 +43,22 @@
             this.lblProgress.BackColor = System.Drawing.Color.Transparent;
             this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProgress.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblProgress.Location = new System.Drawing.Point(224, 27);
-            this.lblProgress.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblProgress.Location = new System.Drawing.Point(168, 22);
+            this.lblProgress.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(0, 20);
+            this.lblProgress.Size = new System.Drawing.Size(0, 17);
             this.lblProgress.TabIndex = 8;
             // 
             // lblTime
             // 
             this.lblTime.AutoSize = true;
             this.lblTime.BackColor = System.Drawing.Color.Transparent;
-            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTime.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblTime.Location = new System.Drawing.Point(208, 27);
-            this.lblTime.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblTime.Location = new System.Drawing.Point(156, 22);
+            this.lblTime.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(0, 20);
+            this.lblTime.Size = new System.Drawing.Size(0, 24);
             this.lblTime.TabIndex = 7;
             // 
             // timer1
@@ -75,10 +75,10 @@
             this.btnStartStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStartStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStartStop.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnStartStop.Location = new System.Drawing.Point(3, 2);
-            this.btnStartStop.Margin = new System.Windows.Forms.Padding(11, 10, 11, 10);
+            this.btnStartStop.Location = new System.Drawing.Point(2, 2);
+            this.btnStartStop.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnStartStop.Name = "btnStartStop";
-            this.btnStartStop.Size = new System.Drawing.Size(79, 70);
+            this.btnStartStop.Size = new System.Drawing.Size(74, 72);
             this.btnStartStop.TabIndex = 1;
             this.btnStartStop.Tag = "";
             this.toolTip1.SetToolTip(this.btnStartStop, "Stop Recording");
@@ -87,17 +87,17 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(339, 75);
+            this.ClientSize = new System.Drawing.Size(254, 79);
             this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.btnStartStop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

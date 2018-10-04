@@ -597,6 +597,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E44DC72EDD9CA76BD71E81FFD474D4F9"
+        "OwnerKey" = "8:_B8EA043E2E96498E9DBBA427B5C3BD64"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E5CFB6175A3B42E5B54CE61B40ED10D8"
         "OwnerKey" = "8:_6C4969215FC449D182DE2C78755D5F38"
         "MsmSig" = "8:_UNDEFINED"
@@ -730,13 +736,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5B7BEA6FA5464B269096E6A320F8F2BA"
+        "OwnerKey" = "8:_B8EA043E2E96498E9DBBA427B5C3BD64"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B8EA043E2E96498E9DBBA427B5C3BD64"
+        "OwnerKey" = "8:_5B7BEA6FA5464B269096E6A320F8F2BA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -3825,7 +3831,7 @@
         "UpgradeCode" = "8:{12A705F9-7EE0-4A61-BE54-E4204E5D8E25}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"

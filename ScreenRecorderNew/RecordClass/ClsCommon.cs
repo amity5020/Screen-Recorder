@@ -9,9 +9,12 @@ namespace ScreenRecorderNew
 {
    public class ClsCommon
     {
-        public static string APIBASEURL = "https://testing.trezlestaging.com/api/exeLogEntry/";
-        
+         public static string APIBASEURL = "http://microwebapi.azurewebsites.net/api/exeLogEntry/";
+        //public static string APIBASEURL = "https://micro.trezlestaging.com/api/exeLogEntry/";
+
         public static string UserId="";
+        public static int TimeToexit = 10;
+        public static int Interval = 10000;
         public static bool WriteLog(string strMessage)
         {
             try

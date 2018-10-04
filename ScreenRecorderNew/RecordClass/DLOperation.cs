@@ -7,97 +7,114 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using System.Threading;
 
 namespace ScreenRecorderNew
 {
-   public class DLOperation
+    public class EXEConfig
+    {
+        public int RecordNo { get; set; }
+        public int TimeInterval { get; set; }
+        public int TimeToExit { get; set; }
+
+    }
+    public class LastActiveResult
+    {
+        public bool IsLogged { get; set; }
+        public int Seconds { get; set; }
+    }
+    public class DLOperation
     {
         
         public DLOperation()
         {
             
         }
+        public bool exeConfig()
+        {
+           
+            try
+            {
+                HttpClient client = new HttpClient();
+                string method = "GetEXEConfig";
+
+                client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = client.GetAsync(ClsCommon.APIBASEURL + method).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string responsestr = response.Content.ReadAsStringAsync().Result;
+                    EXEConfig eXEConfig = JsonConvert.DeserializeObject<EXEConfig>(responsestr);
+                    ClsCommon.TimeToexit = eXEConfig.TimeToExit;
+                    ClsCommon.Interval = eXEConfig.TimeInterval;
+                }else
+                {
+                    ClsCommon.WriteLog(response.Content.ReadAsStringAsync().Result + " Mthod :- getConfig");
+                }
+                return true;
+            }
+            catch(Exception ex)
+            {
+                ClsCommon.WriteLog(ex.Message + " Mthod :- getConfigexception");
+                return false;
+            }
+        }
+        public LastActiveResult checkLastActive()
+        {
+            LastActiveResult lastActiveResult = new LastActiveResult() { IsLogged = false,Seconds=0 };
+            try
+            {
+                HttpClient client = new HttpClient();
+                string method = "CheckLastActive?GUID="+ClsCommon.UserId;
+
+                client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = client.GetAsync(ClsCommon.APIBASEURL + method).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string responsestr = response.Content.ReadAsStringAsync().Result;
+                    lastActiveResult = JsonConvert.DeserializeObject<LastActiveResult>(responsestr);
+                  
+                }else
+                {
+                    ClsCommon.WriteLog(response.Content.ReadAsStringAsync().Result);
+                }
+                return lastActiveResult;
+            }
+            catch(Exception ex)
+            {
+                ClsCommon.WriteLog(ex.Message+" Mthod :- CheckLastActive");
+             //   ClsCommon.WriteLog(ex.Message+" Mthod :- CheckLastActive");
+                return lastActiveResult;
+            }
+        }
         public bool SaveEntry(string UserId, string URL, int LogType)
         {
-            HttpClient client = new HttpClient();
-            string method = "";
-            if(URL.Trim()=="")
+            try
             {
-                method= "/SaveLogEntry?UserId=" + UserId +"&LogType=" + LogType;
-            }else
+                HttpClient client = new HttpClient();
+                string method = "";
+                if (URL.Trim() == "")
+                {
+                    method = "/SaveLogEntry?UserId=" + UserId + "&LogType=" + LogType;
+                }
+                else
+                {
+                    method = "/SaveLogEntry?UserId=" + UserId + "&URL=" + URL + "&LogType=" + LogType;
+                }
+                // client.BaseAddress = new Uri(URL);
+                client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = client.GetAsync(ClsCommon.APIBASEURL + method).Result;
+                //var dataObjects = response.Content.Result;
+                return true;
+            }catch(Exception ex)
             {
-                method = "/SaveLogEntry?UserId=" + UserId + "&URL=" + URL + "&LogType=" + LogType;
+                ClsCommon.WriteLog(ex.Message + " Mthod=SaveEntry");
+                return false;
             }
-           // client.BaseAddress = new Uri(URL);
-            client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync(ClsCommon.APIBASEURL+method ).Result;
-            //var dataObjects = response.Content.Result;
-            return true;
         }
-        //    public bool SaveEntry(string UserId,string URL,int LogType)
-        //{
-        //    try
-        //    {
-        //        con = new SqlConnection(ClsCommon.SqlConn);
-        //        cmd = new SqlCommand("Insert into RecordEntry(UserId,URL,EntryDate,LogType)values(@UserId,@URL,getdate(),@LogType)", con);
-        //        cmd.Parameters.AddWithValue("@UserId",UserId);
-        //        cmd.Parameters.AddWithValue("@URL", URL);
-        //        cmd.Parameters.AddWithValue("@LogType", LogType);
-        //        con.Open();
-        //        int i=cmd.ExecuteNonQuery();
-        //        if(i==1)
-        //        {
-        //            return true;
-        //        }else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        return false;
-        //    }
-        //    finally
-        //    {
-        //        if (con.State == ConnectionState.Open)
-        //        {
-        //            con.Close();
-        //            con.Dispose();
-        //        }
-        //    }
-        //}
-
-        //public bool SaveExeString(string GUID)
-        //{
-        //    try
-        //    {
-        //        con = new SqlConnection(ClsCommon.SqlConn);
-        //        cmd = new SqlCommand("Insert into ExeRecords(EXEGuid,EntryDateTime)values(@GUID,getdate())", con);
-        //        cmd.Parameters.AddWithValue("@GUID", GUID);
-        //        con.Open();
-        //        int i = cmd.ExecuteNonQuery();
-        //        if (i == 1)
-        //        {
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return false;
-        //    }
-        //    finally
-        //    {
-        //        if (con.State == ConnectionState.Open)
-        //        {
-        //            con.Close();
-        //            con.Dispose();
-        //        }
-        //    }
-        //}
+       
     }
 }
